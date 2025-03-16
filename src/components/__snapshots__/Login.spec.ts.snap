@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LoginComponent > 失敗したログインにエラーメッセージを表示する 1`] = `
+"<div data-v-08aaad4e="" class="login-container">
+  <h2 data-v-08aaad4e="">ログイン「テスト」</h2>
+  <!--v-if-->
+  <form data-v-08aaad4e="" class="login-form">
+    <div data-v-08aaad4e="" class="form-group"><label data-v-08aaad4e="" for="email">📧 メールアドレス :</label><input data-v-08aaad4e="" id="email" type="email" placeholder="メールアドレスを入力してください" required="">
+      <!--v-if-->
+    </div>
+    <div data-v-08aaad4e="" class="form-group"><label data-v-08aaad4e="" for="password">🔒 パスワード:</label><input data-v-08aaad4e="" id="password" type="password" placeholder="パスワードを入力してください" required="">
+      <!--v-if-->
+      <!--v-if-->
+    </div>
+    <div data-v-08aaad4e="" class="error-message">ログインメールとパスワードは一致しません</div><button data-v-08aaad4e="" type="submit" class="login-button"><span data-v-08aaad4e="">ログイン</span></button>
+  </form>
+</div>"
+`;
