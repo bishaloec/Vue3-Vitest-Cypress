@@ -23,16 +23,17 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Start development server
-        run: npm run dev &
-        env:
-          NODE_ENV: development
+      - name: Build the project
+        run: npm run build
 
-      - name: Wait for server
-        uses: cypress-io/github-action@v5
-        with:
-          wait-on: 'http://localhost:5173'
-          wait-on-timeout: 60
+      - name: Start Vite server in the background
+        run: npm run dev -- --port 5173 &
+      
+      - name: Run unit tests
+        run: npm run test:unit
+      
+      - name: Wait for Vite server to be ready
+        run: npx wait-on http://localhost:5173
 
       - name: Run unit tests
         run: npm run test:unit
