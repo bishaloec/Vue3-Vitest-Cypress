@@ -89,12 +89,41 @@ describe('Login Page', () => {
       
       // Wait for the API call and assert success message
      // cy.wait('@loginRequest')
-      cy.get('.success-message').should('contain', 'ログインが成功')
+      //cy.get('.success-message').should('contain', 'ログインが成功')
+
+      cy.screenshot('after-login-success');
+
+
+      cy.url().should('include', '/dashboard')
+      cy.contains('ようこそ、test@example.com さん！')
+
+ 
+      
       
       // In a real application, we would also check for navigation or token storage
       // cy.url().should('include', '/dashboard')
     })
-    
+
+    it('ログアウトボタンでログイン画面に戻る', () => {
+      // ログイン処理
+      cy.get('input[type="email"]').type('test@example.com')
+      cy.get('input[type="password"]').type('Password123')
+      cy.get('button[type="submit"]').click()
+      
+      // ダッシュボードに遷移するのを待つ
+      cy.url().should('include', '/dashboard')
+      
+      // ログアウトボタンをクリック
+      cy.get('.logout-button').click()
+      
+      // ログインページに戻ることを確認
+      cy.url().should('include', '/login')
+      
+      // メール入力フィールドが空であることを確認
+      cy.get('#email').should('be.empty')
+    })
+
+
     it('失敗したログインにエラーメッセージを表示する', () => {
       // Fill form with invalid credentials
       cy.get('input[type="email"]').type('wrong@example.com')
@@ -107,6 +136,8 @@ describe('Login Page', () => {
       //cy.wait('@loginRequest')
 
       cy.get('.error-message').should('contain', 'ログインメールとパスワードは一致しません')
+
+      cy.screenshot('after-login-failure');
     })
   })
   

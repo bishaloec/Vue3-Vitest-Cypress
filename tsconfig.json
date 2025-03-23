@@ -22,7 +22,11 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowJs": true, 
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
 
 }

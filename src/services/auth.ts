@@ -12,7 +12,9 @@ export interface LoginResult {
       await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API delay
       
       // Mock authentication logic
-      if (email === 'test@example.com' && password === 'Password123') {
+      //if (email === 'test@example.com' && password === 'Password123') {
+      if (email === 'bishal' && password === 'Password123') {
+
         return {
           success: true,
           token: 'mock-jwt-token'

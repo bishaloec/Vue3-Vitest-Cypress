@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DashboardComponent > ダッシュボード snapshot 1`] = `
+"<div data-v-7f773d42="" class="dashboard-container">
+  <h1 data-v-7f773d42="">ようこそ、test@example.com さん！</h1><button data-v-7f773d42="" class="logout-button">ログアウト</button>
+</div>"
+`;

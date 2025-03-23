@@ -1,9 +1,11 @@
-// src/components/Login.spec.ts
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Login from '../views/Login.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import { createPinia, setActivePinia } from 'pinia'
+import Dashboard from '../views/Dashboard.vue'
 
-// AUTHサービスをMoock
+// AUTHサービスをMock
 vi.mock('@/services/auth', () => ({
   useAuthService: () => ({
     login: vi.fn().mockImplementation(async (email, password) => {
@@ -17,13 +19,35 @@ vi.mock('@/services/auth', () => ({
   })
 }))
 
+// Vue Routerの設定
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    { path: '/', redirect: '/login' },
+    { path: '/login', component: Login },
+    { path: '/dashboard', component: Dashboard, meta: { requiresAuth: true } }
+  ]
+})
+
 describe('LoginComponent', () => {
   let wrapper: any
   
-  beforeEach(() => {
-    wrapper = mount(Login)
+  beforeEach(async () => {
+    // Piniaの初期化
+    setActivePinia(createPinia())
+    
+    // Vue Routerをリセット
+    router.push('/login')
+    await router.isReady()
+    
+    // Loginコンポーネントをマウント
+    wrapper = mount(Login, {
+      global: {
+        plugins: [router, createPinia()] // Vue RouterとPiniaをプラグインとして渡す
+      }
+    })
   })
-  
+
   it('ログインフォームを正しくレンダリングする', () => {
     expect(wrapper.find('h2').text()).toBe('ログイン「テスト」')
     expect(wrapper.find('input[type="email"]').exists()).toBe(true)
@@ -87,7 +111,6 @@ describe('LoginComponent', () => {
     expect(wrapper.find('.warning-message').exists()).toBe(false)
   })
   
-  
   it('成功したログインを処理する', async () => {
     // Fill form with valid credentials
     await wrapper.find('input[type="email"]').setValue('test@example.com')
@@ -102,8 +125,8 @@ describe('LoginComponent', () => {
     // Wait for the mock API call to resolve
     await new Promise(resolve => setTimeout(resolve, 20))
     
-    // Assert success message
-    expect(wrapper.find('.success-message').text()).toContain('ログインが成功')
+    // Check if the router navigates to the dashboard
+    expect(router.currentRoute.value.path).toBe('/dashboard')
   })
   
   it('失敗したログインにエラーメッセージを表示する', async () => {
@@ -119,7 +142,11 @@ describe('LoginComponent', () => {
     
     // Assert error message
     expect(wrapper.find('.error-message').text()).toContain('ログインメールとパスワードは一致しません')
+    expect(wrapper.html()).toMatchSnapshot();
 
-    expect(wrapper.html()).toMatchSnapshot()
   })
+
+  it('ログイン snapshot', () => {
+    expect(wrapper.html()).toMatchSnapshot();
+  });
 })

@@ -53,6 +53,9 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
 import { useAuthService } from '../services/auth'
+import { useAuthStore } from '../stores/auth.ts'
+import { useRouter } from 'vue-router'
+
 
 export default defineComponent({
   name: 'LoginComponent',
@@ -67,7 +70,9 @@ export default defineComponent({
     const isLoading = ref(false)
     
     const authService = useAuthService()
-    
+
+    const router = useRouter()
+  
     const validateEmail = () => {
       emailError.value = ''
       
@@ -129,6 +134,9 @@ export default defineComponent({
         
         if (result.success) {
           successMessage.value = 'ログインが成功'
+          const authStore = useAuthStore()
+          authStore.login(email.value)
+          router.push('/dashboard') // Vue Routerを使用
           // 実際のアプリでは、ここでリダイレクトするか、auth stateを更新する
         } else {
           loginError.value = result.message || 'Login failed. Please check your credentials.'
