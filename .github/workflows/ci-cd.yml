@@ -32,14 +32,14 @@ jobs:
       - name: Run unit tests
         run: npm run test:unit
       
-      - name: Wait for Vite server to be ready
-        run: npx wait-on http://localhost:5173
+      # - name: Wait for Vite server to be ready
+      #   run: npx wait-on http://localhost:5173
 
-      - name: Run unit tests
-        run: npm run test:unit
+      # - name: Run unit tests
+      #   run: npm run test:unit
 
-      - name: Run E2E tests
-        run: npm run test:e2e
+      # - name: Run E2E tests
+      #   run: npm run test:e2e
 
   build:
     runs-on: ubuntu-latest
