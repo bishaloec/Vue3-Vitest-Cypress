@@ -112,7 +112,7 @@ export default defineComponent({
     }
     
     const isLoginDisabled = computed(() => {
-      return email.value || !password.value || !!emailError.value || !!passwordError.value
+      return !!email.value || !password.value || !!emailError.value || !!passwordError.value
     })
     
     const handleLogin = async () => {
