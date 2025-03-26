@@ -14,7 +14,7 @@ vi.mock('@/services/auth', () => ({
       if (email === 'test@example.com' && password === 'Password123') {
         return { success: true, token: 'mock-token' }
       }
-      return { success: false, message: 'ログインメールとパスワードは一致しません' }
+      return { success: false, message: 'ログインメールとパスワードは一致しません1' }
     })
   })
 }))
