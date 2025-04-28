@@ -7,7 +7,7 @@ import { createPinia, setActivePinia } from 'pinia';
 import { useAuthStore } from '../stores/auth.ts'
 
 
-// Mock Vue Router
+// Vue RouterをMock
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/dashboard', component: Dashboard , meta: { requiresAuth: true }},
@@ -27,7 +27,7 @@ describe('DashboardComponent', () => {
     // 認証状態を設定（ログイン状態をシミュレート）
     const authStore = useAuthStore()
     authStore.login('test@example.com') // ユーザー名を設定
-     // Mount Dashboard component
+     // Dashboardコンポーネントをマウント
      wrapper = mount(Dashboard, {
         global: {
           plugins: [router], // Provide router to the test
@@ -48,7 +48,7 @@ describe('DashboardComponent', () => {
     expect(wrapper.find('h1').text()).toBe('ようこそ、test@example.com さん！');
   });
 
-  it('ログアウトがクリックされた時にログインにリダイレクトするする', async () => {
+  it('ログアウトがクリックされた時にログインにリダイレクトする', async () => {
     router.push('/dashboard');
     await router.isReady();
 

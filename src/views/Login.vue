@@ -99,8 +99,8 @@ export default defineComponent({
         return false
       }
       
-      // Check password strength
-      if (password.value.length < 8) {
+      // パスワードの強さを確認
+      if (password.value.length < 9) {
         passwordWarning.value = 'パスワードは少なくとも8文字以上の長さが必要です'
       } else if (!/[A-Z]/.test(password.value)) {
         passwordWarning.value = 'パスワードには、少なくとも1つの大文字が含まれている必要があります'
@@ -112,15 +112,15 @@ export default defineComponent({
     }
     
     const isLoginDisabled = computed(() => {
-      return !email.value || !password.value || !!emailError.value || !!passwordError.value
+      return !!email.value || !password.value || !!emailError.value || !!passwordError.value
     })
     
     const handleLogin = async () => {
-      // Reset previous errors
+      // 以前のエラーをリセット
       loginError.value = ''
       successMessage.value = ''
       
-      // Validate form
+      // フォームを検証
       const isEmailValid = validateEmail()
       const isPasswordValid = validatePassword()
       
